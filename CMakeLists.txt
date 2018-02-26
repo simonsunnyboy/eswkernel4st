@@ -26,5 +26,9 @@ set(CMAKE_ASM_FLAGS "-m68000 -I${KERNEL_SRC}")
 include_directories(${KERNEL_SRC})
 
 add_executable(${TARGETNAME}
- src/main.c
- )
+	src/main.c
+	${KERNEL_SRC}/eswkernel4st.h
+	${KERNEL_SRC}/eswkernel4st_services.h
+	README.md
+	LICENSE
+)
