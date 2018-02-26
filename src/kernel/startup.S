@@ -18,6 +18,7 @@
 					
 			.text
 			.globl ___main
+			.globl _resetST
 
 start:
 			move.l	4(sp),a5				| address to basepage

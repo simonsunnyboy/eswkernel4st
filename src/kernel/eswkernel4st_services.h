@@ -13,6 +13,11 @@
 
     #include <stdint.h>
 
+    /**
+     * @brief callback for the user application to terminate the main loop
+     */
+    void ESWK_RequestExit(void);
+
 
     /**
      * @brief kernel provided address of logical 32K Atari ST screen in RAM (aligned to 256 byte boundary)

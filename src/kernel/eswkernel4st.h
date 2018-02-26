@@ -7,6 +7,7 @@
  *
  * @file  eswkernel4st.h
  * @brief public API definition for interfacing with user applications
+ * @details The user application has implement all functions mentioned in this interface. The kernel will call them when needed.
  */
 #ifndef ESWKERNEL4ST_H
     #define ESWKERNEL4ST_H

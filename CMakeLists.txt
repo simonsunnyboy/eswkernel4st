@@ -26,6 +26,7 @@ set(CMAKE_ASM_FLAGS "-m68000 -I${KERNEL_SRC}")
 include_directories(${KERNEL_SRC})
 
 add_library(eswkernel4st
+	${KERNEL_SRC}/main.c
 	${KERNEL_SRC}/screen.c
 	${KERNEL_SRC}/internals.h
 	${KERNEL_SRC}/eswkernel4st.h
@@ -35,7 +36,7 @@ add_library(eswkernel4st
 )
 
 add_executable(${TARGETNAME}
-	src/main.c
+	src/demoapp.c
 )
 
 target_link_libraries(${TARGETNAME} eswkernel4st)
