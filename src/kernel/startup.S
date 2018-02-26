@@ -42,13 +42,10 @@ start:
 			trap      #14          | Call XBIOS Supexec()
 			addq.l    #6,sp        | Correct stack
 
-
-
-
-
-exit:	
-			clr.w -(sp)
-			trap #1		
+_resetST:	pea	reset		| always reset on return from prog
+			move.w	#0x26,-(sp)
+			trap	#14
+reset:		move.l	4.w,-(sp)
 		
 ___main:
 			rts
