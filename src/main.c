@@ -1,16 +1,27 @@
 #include <stdint.h>
 #include <osbind.h>
 
+#include "eswkernel4st.h"
+#include "eswkernel4st_services.h"
+
+#include "internals.h"
+
 int main(void)
 {
-	(*(uint16_t *)0xFFFF8240) = 0x31; // we are in Supervisor so this should work
+    static uint16_t my_palette[] = { 0x0031, 0x0000, 0x0000, 0x0000,
+                                     0x0000, 0x0000, 0x0000, 0x0000,
+                                     0x0000, 0x0000, 0x0000, 0x0000,
+                                     0x0000, 0x0000, 0x0000, 0x0FFF
+                                   };
 
-	(*(uint16_t *)0xFFFF825E) = 0xFFF;
+    ESWK_int_InitScreens();
+
+    ESWK_SetPalette(my_palette);
 
 	(void)Cconws( "press any key\n");
 
 	Cconin();
 
-	return 0;
+    return 0;
 }
 

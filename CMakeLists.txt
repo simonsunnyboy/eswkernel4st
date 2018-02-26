@@ -25,10 +25,17 @@ set(CMAKE_ASM_FLAGS "-m68000 -I${KERNEL_SRC}")
 
 include_directories(${KERNEL_SRC})
 
-add_executable(${TARGETNAME}
-	src/main.c
+add_library(eswkernel4st
+	${KERNEL_SRC}/screen.c
+	${KERNEL_SRC}/internals.h
 	${KERNEL_SRC}/eswkernel4st.h
 	${KERNEL_SRC}/eswkernel4st_services.h
 	README.md
 	LICENSE
 )
+
+add_executable(${TARGETNAME}
+	src/main.c
+)
+
+target_link_libraries(${TARGETNAME} eswkernel4st)

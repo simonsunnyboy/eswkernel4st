@@ -47,4 +47,11 @@
      */
     void ESWK_CopyScreen(void * src_screenaddr, void * dest_screenaddr);
 
+    /**
+     * @brief sets a complete 16 color palette in ST format
+     * @details A palette consists of 16 consecutive uint16_t values.
+     * @param paletteaddr points to palette in RAM
+     */
+    void ESWK_SetPalette(void * paletteaddr);
+
 #endif
