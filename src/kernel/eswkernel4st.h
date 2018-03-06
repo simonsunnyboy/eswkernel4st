@@ -16,8 +16,6 @@
 
     void UserCode_Init(void);
     void UserCode_Mainloop(void);
-    void UserCode_50Hz_ISR(void);
-    void UserCode_VBL_ISR(void);
     void UserCode_TerminateLoop(void);
 
 #endif

@@ -35,7 +35,7 @@ int main(void)
 
     /* init kernel subsystems: */
     ESWK_int_InitScreens();
-    /* ESWK_int_InitInterrupts(); */
+    ESWK_int_InitInterrupts();
     ESWK_int_running = true;
 
     /* run user initialization: */

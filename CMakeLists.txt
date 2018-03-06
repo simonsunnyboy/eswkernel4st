@@ -29,6 +29,8 @@ add_library(eswkernel4st
 	${KERNEL_SRC}/main.c
 	${KERNEL_SRC}/screen.c
 	${KERNEL_SRC}/internals.h
+	${KERNEL_SRC}/interrupt_handlers.c
+	${KERNEL_SRC}/interrupt.S
 	${KERNEL_SRC}/eswkernel4st.h
 	${KERNEL_SRC}/eswkernel4st_services.h
 	README.md

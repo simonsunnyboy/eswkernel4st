@@ -15,35 +15,50 @@
 #include "eswkernel4st.h"
 #include "eswkernel4st_services.h"
 
+volatile uint16_t col = 0x000;
+volatile uint16_t tmr = 0;
+
+static void UserCode_50Hz_ISR(void)
+{
+    tmr++;
+    if(tmr > (50 * 5))
+    {
+        ESWK_RequestExit();
+    }
+}
+
+static void UserCode_200Hz_ISR(void)
+{
+    *(uint16_t *)0xFFFF8240 = col;
+    col += 2;
+
+}
+
+static void UserCode_VBL_ISR(void)
+{
+    col = 0x000;
+}
+
 void UserCode_Init(void)
 {
-    static uint16_t my_palette[] = { 0x0031, 0x0000, 0x0000, 0x0000,
+    static uint16_t my_palette[] = { 0x0000, 0x0000, 0x0000, 0x0000,
                                      0x0000, 0x0000, 0x0000, 0x0000,
                                      0x0000, 0x0000, 0x0000, 0x0000,
                                      0x0000, 0x0000, 0x0000, 0x0FFF
                                    };
     ESWK_SetPalette(my_palette);
 
-    (void)Cconws( "press any key\n");
-
-    Cconin();
+    /* Set all user vectors: */
+    ESWK_Set50HzRoutine(&UserCode_50Hz_ISR);
+    ESWK_Set200HzRoutine(&UserCode_200Hz_ISR);
+    ESWK_SetVBLRoutine(&UserCode_VBL_ISR);
 
     return;
 }
 
 void UserCode_Mainloop(void)
 {
-    ESWK_RequestExit();
-}
-
-void UserCode_50Hz_ISR(void)
-{
-
-}
-
-void UserCode_VBL_ISR(void)
-{
-
+    Vsync();
 }
 
 void UserCode_TerminateLoop(void)

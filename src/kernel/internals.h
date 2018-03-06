@@ -16,4 +16,8 @@
     void ESWK_int_InitScreens(void);
     void ESWK_int_InitInterrupts(void);
 
+    void ESWK_int_50hz_ISR(void);
+    void ESWK_int_200hz_ISR(void);
+    void ESWK_int_VBL_ISR(void);
+
 #endif

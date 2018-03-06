@@ -59,4 +59,25 @@
      */
     void ESWK_SetPalette(void * paletteaddr);
 
+    /**
+     * @brief   set function pointer to call from Timer C in 50hz intervals
+     * @details If NULL is given, no routine is executed.
+     * @param   userrout is a function pointer with void ...(void) prototype
+     */
+    void ESWK_Set50HzRoutine(void (*userrout)(void));
+
+    /**
+     * @brief   set function pointer to call from Timer C in 200hz intervals
+     * @details If NULL is given, no routine is executed.
+     * @param   userrout is a function pointer with void ...(void) prototype
+     */
+    void ESWK_Set200HzRoutine(void (*userrout)(void));
+
+    /**
+     * @brief   set function pointer to call from VBL interrupt
+     * @details If NULL is given, no routine is executed.
+     * @param   userrout is a function pointer with void ...(void) prototype
+     */
+    void ESWK_SetVBLRoutine(void (*userrout)(void));
+
 #endif
