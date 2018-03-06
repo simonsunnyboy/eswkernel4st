@@ -39,9 +39,16 @@ static volatile bool ESWK_int_running;
 
 int main(void)
 {
+    const uint32_t mch_cookie = ESWK_GetMachine();
 
     /* hide VT52 cursor: ESC f*/
     (void)Cconws("\0x1B""f");
+
+    /* check for sane machine before continuing: */
+    if(mch_cookie >= MCH_MILAN_C)
+    {
+        (void)Cconws("WARNING - non genuine Atari hardware detected! Your software may fail!\r\n");
+    }
 
     /* init kernel subsystems: */
     ESWK_int_InitScreens();

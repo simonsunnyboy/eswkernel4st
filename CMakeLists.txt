@@ -27,6 +27,7 @@ include_directories(${KERNEL_SRC})
 
 add_library(eswkernel4st
 	${KERNEL_SRC}/main.c
+	${KERNEL_SRC}/cookie.c
 	${KERNEL_SRC}/screen.c
 	${KERNEL_SRC}/internals.h
 	${KERNEL_SRC}/interrupt_handlers.c
