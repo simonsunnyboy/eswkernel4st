@@ -40,6 +40,9 @@ static volatile bool ESWK_int_running;
 int main(void)
 {
 
+    /* hide VT52 cursor: ESC f*/
+    (void)Cconws("\0x1B""f");
+
     /* init kernel subsystems: */
     ESWK_int_InitScreens();
     ESWK_int_InitInterrupts();
