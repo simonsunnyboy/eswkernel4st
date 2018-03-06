@@ -19,6 +19,13 @@
 #include "internals.h"
 
 /* --------------------------------------------------------------------------
+ * local definitions
+ * --------------------------------------------------------------------------
+ */
+
+#define CONTERM_SYSVAR (*((uint8_t *)0x00000484UL))   /**< pointer to conterm system variable */
+
+/* --------------------------------------------------------------------------
  * local variables
  * --------------------------------------------------------------------------
  */
@@ -36,6 +43,15 @@ int main(void)
     /* init kernel subsystems: */
     ESWK_int_InitScreens();
     ESWK_int_InitInterrupts();
+
+    /* deactivate keyclick: */
+    CONTERM_SYSVAR &= 0xFEU;
+
+    /* kill YM2149 sound: */
+    (void)Giaccess(0,0x88);
+    (void)Giaccess(0,0x89);
+    (void)Giaccess(0,0x8A);
+
     ESWK_int_running = true;
 
     /* run user initialization: */
