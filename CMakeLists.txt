@@ -29,6 +29,7 @@ add_library(eswkernel4st
 	${KERNEL_SRC}/main.c
 	${KERNEL_SRC}/cookie.c
 	${KERNEL_SRC}/screen.c
+	${KERNEL_SRC}/picture.c
 	${KERNEL_SRC}/internals.h
 	${KERNEL_SRC}/interrupt_handlers.c
 	${KERNEL_SRC}/interrupt.S

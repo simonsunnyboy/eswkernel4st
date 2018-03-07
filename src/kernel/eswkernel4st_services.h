@@ -129,6 +129,38 @@
     void ESWK_GetPalette(void * paletteaddr);
 
     /**
+     * @brief   calculates addresses for screen and palette information for NEOCHROME picture in RAM
+     * @details Use this to access the data parts of the picture independently.
+     * @param   neopicture_addr points to NEOCHROME picture in RAM
+     * @param   dest_screen_data is updated with a RAM address relative to neopicture_addr pointing to screen pixel data
+     * @param   dest_palette_data is updated with a RAM address relative to neopicture_addr pointing to palette information
+     */
+    void ESWK_CalcNEOPictureDataAddr(void *neopicture_addr, void *dest_screen_data, void *dest_palette_data);
+
+    /**
+     * @brief   calculates addresses for screen and palette information for DEGAS picture in RAM
+     * @details Use this to access the data parts of the picture independently.
+     * @param   degaspicture_addr points to DEGAS picture in RAM
+     * @param   dest_screen_data is updated with a RAM address relative to neopicture_addr pointing to screen pixel data
+     * @param   dest_palette_data is updated with a RAM address relative to neopicture_addr pointing to palette information
+     */
+    void ESWK_CalcPI1PictureDataAddr(void *degaspicture_addr, void *dest_screen_data, void *dest_palette_data);
+
+    /**
+     * @brief display NEOCHROME picture with setting the associated palette
+     * @param neopicture_addr points to NEOCHROME file in RAM
+     * @param dest points to destionation screen
+     */
+    void ESWK_ShowNEOPicture(void *neopicture_addr, void *dest);
+
+    /**
+     * @brief display DEGAS picture with setting the associated palette
+     * @param degaspicture_addr points to DEGAS file in RAM
+     * @param dest points to destionation screen
+     */
+    void ESWK_ShowPI1Picture(void *degaspicture_addr, void *dest);
+
+    /**
      * @brief   set function pointer to call from Timer C in 50hz intervals
      * @details If NULL is given, no routine is executed.
      * @param   userrout is a function pointer with void ...(void) prototype
