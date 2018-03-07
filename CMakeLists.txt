@@ -32,6 +32,7 @@ add_library(eswkernel4st
 	${KERNEL_SRC}/picture.c
 	${KERNEL_SRC}/internals.h
 	${KERNEL_SRC}/interrupt_handlers.c
+	${KERNEL_SRC}/decode_pc1.S
 	${KERNEL_SRC}/interrupt.S
 	${KERNEL_SRC}/jagpad.S
 	${KERNEL_SRC}/eswkernel4st.h
