@@ -46,3 +46,10 @@ add_executable(demo_isr.tos
 )
 
 target_link_libraries(demo_isr.tos eswkernel4st)
+
+add_executable(demo_pc1.tos
+	src/demo_pc1.c
+	src/demo_pc1.h
+)
+
+target_link_libraries(demo_pc1.tos eswkernel4st)

@@ -5,7 +5,7 @@
  * The MIT License applies to this software. Refer to the file COPYING for
  * details.
  *
- * @file  demoapp.c
+ * @file  demo_isr.c
  * @brief demonstration application for the kernel based on functions called by the kernel
  */
 
