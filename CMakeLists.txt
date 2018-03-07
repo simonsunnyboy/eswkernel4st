@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
-set(TARGETNAME kernel.tos)
-project(${TARGETNAME})
+
+project(ESWKernel4ST)
 # disable strange gcc assumptions
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
@@ -41,8 +41,8 @@ add_library(eswkernel4st
 	LICENSE
 )
 
-add_executable(${TARGETNAME}
-	src/demoapp.c
+add_executable(demo_isr.tos
+	src/demo_isr.c
 )
 
-target_link_libraries(${TARGETNAME} eswkernel4st)
+target_link_libraries(demo_isr.tos eswkernel4st)
