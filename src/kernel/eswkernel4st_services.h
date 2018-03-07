@@ -12,6 +12,7 @@
     #define ESWKERNEL4ST_SERVICES_H
 
     #include <stdint.h>
+    #include <stdbool.h>
 
     /* --------------------------------------------------------------------------
      * cookie tag values
@@ -44,6 +45,35 @@
     #define MCH_FALCON  0x00030000UL  /**< Falcon class machine */
     #define MCH_MILAN_C 0x00040000UL  /**< Milan */
     #define MCH_ARANYM  0x00050000UL  /**< Aranym or GEM compatible clone */
+
+    /* --------------------------------------------------------------------------
+     * Atari Powerpad reading bitmap: 1 4 7 * 3 6 9 # 2 5 8 0 o p c b a r l d u
+     * --------------------------------------------------------------------------
+     */
+
+    #define JAGPAD_UP   		0x00000001  /**< ... */
+    #define JAGPAD_DOWN 		0x00000002
+    #define JAGPAD_LEFT		 	0x00000004
+    #define JAGPAD_RIGHT 		0x00000008
+    #define JAGPAD_BUT_A   		0x00000010
+    #define JAGPAD_BUT_B   		0x00000020
+    #define JAGPAD_BUT_C    	0x00000040
+    #define JAGPAD_BUT_PAUSE    0x00000080
+    #define JAGPAD_BUT_OPTION   0x00000100
+    #define JAGPAD_BUT_0        0x00000200
+    #define JAGPAD_BUT_8        0x00000400
+    #define JAGPAD_BUT_5        0x00000800
+    #define JAGPAD_BUT_2        0x00001000
+    #define JAGPAD_BUT_HASH     0x00002000
+    #define JAGPAD_BUT_9        0x00004000
+    #define JAGPAD_BUT_6        0x00008000
+    #define JAGPAD_BUT_3        0x00010000
+    #define JAGPAD_BUT_STAR     0x00020000
+    #define JAGPAD_BUT_7        0x00040000
+    #define JAGPAD_BUT_4        0x00080000
+    #define JAGPAD_BUT_1        0x00100000
+
+    #define JAGPAD_FIRE         (JAGPAD_BUT_A|JAGPAD_BUT_B|JAGPAD_BUT_C)  /**< any of the buttons A,B or C is pressed */
 
     /**
      * @brief callback for the user application to terminate the main loop
@@ -126,5 +156,18 @@
      * @return  value of _MCH cookie, see MCH_... values
      */
     uint32_t ESWK_GetMachine(void);
+
+    /**
+     * @brief   read the given Atari Powerpad
+     * @details A reading of 0 (no buttons pressed) is returned on machines not supporting the Extended Joystick Ports.
+     * @param  joypad_nr denotes the port to read, 0 = A, 1 = B
+     * @return bitvector with JAGPAD... encoded bitmasks
+     */
+    uint32_t ESWK_ReadJagpad(uint8_t joypad_nr);
+
+    /**
+     * @brief checks if the kernel detected Extended Joystick Ports
+     */
+    bool ESWK_HasJagpad(void);
 
 #endif

@@ -62,6 +62,10 @@ int main(void)
     (void)Giaccess(0,0x89);
     (void)Giaccess(0,0x8A);
 
+    /* enable Atari Powerpads if machine provides it: */
+    ESWK_int_SetJagpadRoutine(mch_cookie);
+
+    /* The kernel is running and initialized now, handle user application: */
     ESWK_int_running = true;
 
     /* run user initialization: */

@@ -16,6 +16,9 @@
     void ESWK_int_InitScreens(void);
     void ESWK_int_InitInterrupts(void);
 
+    void ESWK_int_ReadJagpads(void);
+    void ESWK_int_SetJagpadRoutine(uint32_t mch_cookie_value);
+
     void ESWK_int_50hz_ISR(void);
     void ESWK_int_200hz_ISR(void);
     void ESWK_int_VBL_ISR(void);
