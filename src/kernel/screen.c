@@ -122,3 +122,21 @@ void ESWK_SetPalette(void * paletteaddr)
     }
     return;
 }
+
+/**
+ * @brief   read a complete 16 color palette in ST format
+ * @details A palette consists of 16 consecutive uint16_t values.
+ * @param   paletteaddr points to destination in RAM
+ */
+void ESWK_GetPalette(void * paletteaddr)
+{
+    uint16_t * col =  (uint16_t *)0xFFFF8240;
+    uint16_t * dest = (uint16_t *)paletteaddr;
+    int idx;
+
+    for(idx = 0; idx < 16; idx++)
+    {
+        *dest++ = *col++;
+    }
+    return;
+}

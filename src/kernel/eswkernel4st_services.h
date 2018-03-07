@@ -122,6 +122,13 @@
     void ESWK_SetPalette(void * paletteaddr);
 
     /**
+     * @brief   read a complete 16 color palette in ST format
+     * @details A palette consists of 16 consecutive uint16_t values.
+     * @param   paletteaddr points to destination in RAM
+     */
+    void ESWK_GetPalette(void * paletteaddr);
+
+    /**
      * @brief   set function pointer to call from Timer C in 50hz intervals
      * @details If NULL is given, no routine is executed.
      * @param   userrout is a function pointer with void ...(void) prototype
