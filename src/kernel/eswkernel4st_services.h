@@ -216,4 +216,41 @@
      */
     bool ESWK_HasJagpad(void);
 
+    /**
+     * @brief install optional IKBD handling to read keyboard, mouse and joystick
+     */
+    void ESWK_InstallIKBD(void);
+
+    /**
+     * @brief uninstall IKBD handling routines
+     */
+    void ESWK_UninstallIKBD(void);
+
+    /**
+     * @brief   deactivate mouse position reporting
+     * @details This activates joystick 0 reporting.
+     */
+    void ESWK_IKBD_MouseOff(void);
+
+    /**
+     * @brief activate mouse position reporting
+     * @details This deactivates joystick 0 reporting.
+     */
+    void ESWK_IKBD_MouseOn(void);
+
+    /**
+     * @brief set current mouse position and define the screen size
+     * @param x position of mouse in pixels
+     * @param y position of mouse in pixels
+     * @param w width of screen in pixels
+     * @param h height of screen in pixels
+     */
+    void ESWK_IKBD_SetMouseOrigin(int16_t x, int16_t y, uint16_t w, uint16_t h);
+
+    /**
+     * @brief allows to configure the scaling of relative mouse movement
+     * @param new_threshold in 1/128 per digit (e.q. 128 = 100%)
+     */
+    void ESWK_IKBD_SetMouseThreshold(uint8_t new_threshold);
+
 #endif

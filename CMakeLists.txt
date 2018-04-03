@@ -35,6 +35,9 @@ add_library(eswkernel4st
 	${KERNEL_SRC}/decode_pc1.S
 	${KERNEL_SRC}/interrupt.S
 	${KERNEL_SRC}/jagpad.S
+	${KERNEL_SRC}/ikbd_isr.S
+	${KERNEL_SRC}/ikbd_keyb.c
+	${KERNEL_SRC}/ikbd_mouse.c
 	${KERNEL_SRC}/eswkernel4st.h
 	${KERNEL_SRC}/eswkernel4st_services.h
 	README.md
