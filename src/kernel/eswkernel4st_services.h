@@ -164,9 +164,8 @@
      * @brief depack packed DEGAS picture to destination address
      * @param pc1_picture_addr points to packed PC1 image in RAM
      * @param dest points to buffer for DEGAS file in RAM (32034 bytes)
-     * @param nr_of_bytes to depack
      */
-    void ESWK_DepackPC1Picture(void *pc1_picture_addr, void *dest, uint16_t nr_of_bytes);
+    void ESWK_DepackPC1Picture(void *pc1_picture_addr, void *dest);
 
     /**
      * @brief   set function pointer to call from Timer C in 50hz intervals

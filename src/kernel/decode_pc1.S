@@ -5,107 +5,92 @@
 | The MIT License applies to this software. Refer to the file COPYING for
 | details.
 |
-| @file  decode_pc1.S
-| @brief depacking routine for packed DEGAS pictures in RAM
+| @file   decode_pc1.S
+| @brief  depacking routine for packed DEGAS pictures in RAM with file header and palette information
+| @author rockyone (used from atari-forum.com post on Mon Mar 19, 2018 2:28 am)
 |
 
 .globl _ESWK_DepackPC1Picture
 .text
 
 _ESWK_DepackPC1Picture:
-	link a6,#0
-	movem.l D0-A2,-(SP)
+	movem.l d0-d7/a0-a6,-(sp)
+	movem.l	64(sp),a0-a1    | working pointers from stack
+	move.b	1(a0),d1	    | Image resolution
 
-	| initialize registers with values from stack
-	move.l 8(a6),a1    | source address
-	move.l 12(a6),a0   | destination address
-	move.w 16(a6),d0   | number of bytes to depack
+	| copy header data and palette to destination
+	move.w (a0),(a1)
+	move.w 2(a0),2(a1)
+	move.w 4(a0),4(a1)
+	move.w 6(a0),6(a1)
+	move.w 8(a0),8(a1)
+	move.w 10(a0),10(a1)
+	move.w 12(a0),12(a1)
+	move.w 14(a0),14(a1)
+	move.w 16(a0),16(a1)
+	move.w 18(a0),18(a1)
+	move.w 20(a0),20(a1)
+	move.w 22(a0),22(a1)
+	move.w 24(a0),24(a1)
+	move.w 26(a0),26(a1)
+	move.w 28(a0),28(a1)
+	move.w 30(a0),30(a1)
+	move.w 32(a0),32(a1)
 
-	| init depack
-	clr d3
-	move #200,d6
-degas_line:
-	move #4,d5
-	sub #1,d6
-	tst d6
-	beq degas_done
+	| skip header at source and destination for unpacking
+	lea.l	34(a0),a0
+	lea.l	34(a1),a1
 
-degas_color:
-	move #40,d4
-degas_loop:
-	cmp.l #1,d0
-	blt degas_done
+	lea.l	32000(a1),a5	| End of the destination
 
-	sub.l #1,d0
-	clr.l d1
-	move.b (a1)+,d1
-	cmp.b #128,d1
-	beq degas_loop
+depackt:
+	moveq.l	#3,d2
+	lsr.b	d1,d2		    | Number of plans -1
+	move.b	d2,d3
+	lsl.b	#1,d3
+	moveq.l	#1,d4 		    | Offset for next byte
 
-	tst.b d1
-	bmi degas_duplicate
+All_lines:
+	movea.l	a1,a3 	        | First plane of a line
+	move.w	d2,d1		    | Reset the number of plans
+	lea.l	160(a3),a6	    | End of a line
 
-degas_copylp:
-	move.b (a1)+,(a0)
-	sub.l #1,d0
-	sub #1,d4
+plans_line:
+	movea.l	a3,a2
 
-	tst d3
-	bne degas_copylp2
-	add #1,a0
-	move #1,d3
-	jmp degas_copyrcrs
-degas_copylp2:
-	add #7,a0
-	clr d3
+Recup_code:
+	moveq.l	#0,d0
+	move.b 	(a0)+,d0
+	bmi.s 	Repete_code 	| <
 
-degas_copyrcrs:
-	dbf d1,degas_copylp
-	tst d4
-	bne degas_loop
-	sub #158,a0
-	sub #1,d5
-	tst d5
-	bne degas_color
-	add #152,a0
-	jmp degas_line
+Copy_code:
+	move.b 	(a0)+,(a2)
+	adda.w	d4,a2           | offest for next byte
+	eor.b 	d3,d4 		    |   7/1  3/1   1/1
+	dbra.w	d0,Copy_code
+	bra.s	End_line
 
-degas_duplicate:
-	muls #-1,d1
-	and #0xff,d1
-	move.b (a1)+,d2
-	sub.l #1,d0
+Repete_code:
+	neg.b 	d0 		        | +
+	move.b	(a0)+,d5
+Recopy_code:
+	move.b 	d5,(a2)
+	adda.w 	d4,a2
+	eor.b 	d3,d4
+	dbra.w 	d0,Recopy_code
 
-degas_duplp:
-	move.b d2,(a0)
+End_line:
+	cmpa.l	a2,a6           | End of a pane of a line ?
+	bhi.s 	Recup_code 	    | >
 
-	sub #1,d4
+	addq.l	#2,a3		    | next plan
+	dbra.w 	d1,plans_line
 
-	tst d3
-	bne degas_duplp2
-	add #1,a0
-	move #1,d3
-	jmp degas_duprcrs
+	movea.l	a6,a1		    | next line
+	cmpa.l	a1,a5
+	bhi.s	All_lines
 
-degas_duplp2:
-	add #7,a0
-	clr d3
-
-degas_duprcrs:
-	dbf d1,degas_duplp
-
-	tst d4
-	bne degas_loop
-	sub #158,a0
-	sub #1,d5
-	tst d5
-	bne degas_color
-	add #152,a0
-	jmp degas_line
-
-degas_done:
-
-	movem.l (SP)+,D0-A2
-	unlk a6
+	movem.l (sp)+,d0-d7/a0-a6
 	rts
+
 .end

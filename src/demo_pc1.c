@@ -24,7 +24,7 @@ volatile uint16_t tmr = 0;
 static void UserCode_50Hz_ISR(void)
 {
     tmr++;
-    if(tmr > (50 * 5))
+    if(tmr > (50 * 10))
     {
         ESWK_RequestExit();
     }
@@ -32,8 +32,10 @@ static void UserCode_50Hz_ISR(void)
 
 void UserCode_Init(void)
 {
-    ESWK_DepackPC1Picture(&GIRL2_PC1[0], &degas_picture[0], GIRL2_PC1_len);
+    /* depack example PC1 to PI1 and display onscreen: */
+    ESWK_DepackPC1Picture(&GIRL2_PC1[0], &degas_picture[0]);
     ESWK_ShowPI1Picture(&degas_picture[0], ESWK_physbase);
+
 
     /* Set all user vectors: */
     ESWK_Set50HzRoutine(&UserCode_50Hz_ISR);
