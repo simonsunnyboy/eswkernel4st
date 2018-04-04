@@ -36,6 +36,7 @@ add_library(eswkernel4st
 	${KERNEL_SRC}/interrupt.S
 	${KERNEL_SRC}/jagpad.S
 	${KERNEL_SRC}/ikbd_isr.S
+	${KERNEL_SRC}/ikbd_joy.c
 	${KERNEL_SRC}/ikbd_keyb.c
 	${KERNEL_SRC}/ikbd_mouse.c
 	${KERNEL_SRC}/eswkernel4st.h

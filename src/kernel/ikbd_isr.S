@@ -243,14 +243,22 @@ ikbd_poll_joystick0:
 _IKBD_Keyboard:
     .skip 128
 	.even
-_IKBD_MouseX:	.skip 2
-_IKBD_MouseY:	.skip 2
+_IKBD_MouseX:
+	.skip 2
+_IKBD_MouseY:
+	.skip 2
 	.even
-_IKBD_MouseB:	.skip 1
-_IKBD_Mousemode: .skip 1
-_IKBD_Joystick0:	.skip 1
-_IKBD_Joystick1: .skip 1
+_IKBD_MouseB:
+	.skip 1
+_IKBD_Mousemode:
+	.skip 1
+_IKBD_Joystick0:
+	.skip 1
+_IKBD_Joystick1:
+	.skip 1
 	.even
-ikbd_ierb:	.skip 1
-ikbd_imrb:	.skip 1
+ikbd_ierb:
+	.skip 1
+ikbd_imrb:
+	.skip 1
 	.end

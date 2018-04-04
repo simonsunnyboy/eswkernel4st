@@ -9,10 +9,8 @@
  * @brief implementation of IKBD related routines for handling mouse input
  */
 
-#include <osbind.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdlib.h>
 
 #include "eswkernel4st_services.h"
 
@@ -26,14 +24,12 @@
  */
 typedef struct
 {
-    int16_t	 x;
-    int16_t	 y;
+    ESWK_MouseState state;
     int16_t  w;
     int16_t  h;
     bool     limit;
-    uint8_t  b;
     uint8_t  threshold;
-} ESWK_MouseData;
+} ESWK_int_MouseData;
 
 
 /* --------------------------------------------------------------------------
@@ -44,9 +40,9 @@ typedef struct
 /**
  * @brief kernel internal mouse data in RAM
  */
-static volatile ESWK_MouseData      ESWK_Mouse =
+static volatile ESWK_int_MouseData ESWK_Mouse =
 {
-    0,0,320,200,true,0,128
+    {0,0,0}, 320,200,true,128
 };
 
 /* --------------------------------------------------------------------------
@@ -64,8 +60,10 @@ extern volatile int16_t        IKBD_MouseY;         /**< Mouse Y position (drive
  * --------------------------------------------------------------------------
  */
 
-/* reads the accumulated mouse packets and updates the mouse position */
-void IKBD_ReadMouse(void)
+/**
+ * @brief reads the accumulated mouse packets and update the mouse position
+ */
+void ESWK_IKBD_ReadMouse(ESWK_MouseState * mouseData)
 {
     int16_t xoffset, yoffset;
 
@@ -82,33 +80,33 @@ void IKBD_ReadMouse(void)
         yoffset = IKBD_MouseY;
     }
 
-    ESWK_Mouse.b = IKBD_MouseB;
-    ESWK_Mouse.x = ESWK_Mouse.x + xoffset;
-    ESWK_Mouse.y = ESWK_Mouse.y + yoffset;
+    ESWK_Mouse.state.b = IKBD_MouseB;
+    ESWK_Mouse.state.x += xoffset;
+    ESWK_Mouse.state.y += yoffset;
 
     if(ESWK_Mouse.limit == true)
     {
         /* mouse coordinates limitation is active? */
-        if(ESWK_Mouse.x < 0)
+        if(ESWK_Mouse.state.x < 0)
         {
-            ESWK_Mouse.x = 0;
+            ESWK_Mouse.state.x = 0;
         }
-        else if(ESWK_Mouse.x > ESWK_Mouse.w)
+        else if(ESWK_Mouse.state.x > ESWK_Mouse.w)
         {
-            ESWK_Mouse.x = ESWK_Mouse.w;
+            ESWK_Mouse.state.x = ESWK_Mouse.w;
         }
         else
         {
             /* do nothing */
         }
 
-        if(ESWK_Mouse.y < 0)
+        if(ESWK_Mouse.state.y < 0)
         {
-            ESWK_Mouse.y = 0;
+            ESWK_Mouse.state.y = 0;
         }
-        else if(ESWK_Mouse.y > ESWK_Mouse.h)
+        else if(ESWK_Mouse.state.y > ESWK_Mouse.h)
         {
-            ESWK_Mouse.y = ESWK_Mouse.h;
+            ESWK_Mouse.state.y = ESWK_Mouse.h;
         }
         else
         {
@@ -119,6 +117,9 @@ void IKBD_ReadMouse(void)
     /* acknowledge accumulated mouse vector (driver internals) */
     IKBD_MouseX = 0;
     IKBD_MouseY = 0;
+
+    /* update user mouse values: */
+    *mouseData = ESWK_Mouse.state;
     return;
 }
 
@@ -136,11 +137,11 @@ void ESWK_IKBD_SetMouseThreshold(uint8_t new_threshold)
  */
 void ESWK_IKBD_SetMouseOrigin(int16_t x, int16_t y, uint16_t w, uint16_t h)
 {
-    ESWK_Mouse.x = x;
-    ESWK_Mouse.y = y;
+    ESWK_Mouse.state.x = x;
+    ESWK_Mouse.state.y = y;
+    ESWK_Mouse.state.b = 0;
     ESWK_Mouse.w = w;
-    ESWK_Mouse.h = h;
-    ESWK_Mouse.b = 0;
+    ESWK_Mouse.h = h;    
     ESWK_Mouse.limit = true;
     ESWK_Mouse.threshold = 128;
     IKBD_MouseX = 0;

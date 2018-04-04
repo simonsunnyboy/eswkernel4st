@@ -75,6 +75,85 @@
 
     #define JAGPAD_FIRE         (JAGPAD_BUT_A|JAGPAD_BUT_B|JAGPAD_BUT_C)  /**< any of the buttons A,B or C is pressed */
 
+    /* --------------------------------------------------------------------------
+     * IKBD joystick reading bitmap
+     * --------------------------------------------------------------------------
+     */
+
+    #define IKBD_JOY_UP          0x01
+    #define IKBD_JOY_DOWN        0x02
+    #define IKBD_JOY_LEFT        0x04
+    #define IKBD_JOY_RIGHT       0x08
+    #define IKBD_JOY_FIRE        0x80
+
+    /* --------------------------------------------------------------------------
+     * mouse reading structure
+     * --------------------------------------------------------------------------
+     */
+
+    /**
+     * @brief mouse state data structure
+     */
+    typedef struct
+    {
+        int16_t	 x;      /**< x position */
+        int16_t	 y;      /**< y position */
+        uint8_t  b;      /**< button state, 1 = left 2 = right, 3 = both buttons pressed */
+    } ESWK_MouseState;
+
+
+    /* --------------------------------------------------------------------------
+     * key press/release flags
+     * --------------------------------------------------------------------------
+     */
+
+    /**
+     * @brief key press states used by the API
+     */
+    typedef enum
+    {
+        ESWK_IKBD_KEY_PRESSED = 0xff,   /**< ... */
+        ESWK_IKBD_KEY_UNDEFINED = 0x80, /**< only used internally */
+        ESWK_IKBD_KEY_RELEASED = 0      /**< ... */
+    } ESWK_KeyPress;
+
+    /* --------------------------------------------------------------------------
+     * keyboard scancodes for language agnostic keys
+     * --------------------------------------------------------------------------
+     */
+
+    #define IKBD_KEY_F1          59
+    #define IKBD_KEY_F2          60
+    #define IKBD_KEY_F3          61
+    #define IKBD_KEY_F4          62
+    #define IKBD_KEY_F5          63
+    #define IKBD_KEY_F6          64
+    #define IKBD_KEY_F7          65
+    #define IKBD_KEY_F8          66
+    #define IKBD_KEY_F9          67
+    #define IKBD_KEY_F10         68
+
+    #define IKBD_KEY_SPACE       0x39
+    #define IKBD_KEY_RETURN      0x1c
+    #define IKBD_KEY_UP          0x48
+    #define IKBD_KEY_DOWN        0x50
+    #define IKBD_KEY_LEFT        0x4b
+    #define IKBD_KEY_RIGHT       0x4d
+    #define IKBD_KEY_BACKSPACE   0x0e
+    #define IKBD_KEY_DELETE      0x53
+    #define IKBD_KEY_ESC         0x01
+    #define IKBD_KEY_TAB         0x0F
+    #define IKBD_KEY_CONTROL     0x1d
+    #define IKBD_KEY_ALT         0x38
+    #define IKBD_KEY_LSHIFT      0x2a
+    #define IKBD_KEY_RSHIFT      0x36
+    #define IKBD_KEY_INSERT      0x52
+    #define IKBD_KEY_HELP        0x62
+    #define IKBD_KEY_UNDO        0x61
+    #define IKBD_KEY_CLRHOME     0x47
+    #define IKBD_KEY_CAPSLOCK    0x3a
+
+
     /**
      * @brief callback for the user application to terminate the main loop
      */
@@ -252,5 +331,41 @@
      * @param new_threshold in 1/128 per digit (e.q. 128 = 100%)
      */
     void ESWK_IKBD_SetMouseThreshold(uint8_t new_threshold);
+
+    /**
+     * @brief reads the accumulated mouse packets and update the mouse position
+     */
+    void ESWK_IKBD_ReadMouse(ESWK_MouseState * mouseData);
+
+    /**
+     * @brief flushes all pending keyboard and joystick events
+     */
+    void ESWK_IKBD_Flush(void);
+
+    /**
+     * @brief read and debounce a key by scancode
+     */
+    ESWK_KeyPress ESWK_IKBD_ReadKey(uint8_t scancode);
+
+    /**
+     * @brief read key press state by scancode
+     */
+    ESWK_KeyPress ESWK_IKBD_IsKeyPressed(uint8_t scancode);
+
+    /**
+     * @brief  read given joystick state
+     * @param  portnr indicated the joystick port queried
+     * @return joystick reading composed of IKBD_JOY_... bits
+     */
+    uint8_t ESWK_IKBD_ReadJoystick(uint8_t portnr);
+
+    /**
+     * @brief   map Atari Powerpad reading to IKBD compatible joystick reading
+     * @details Any powerpad fire button maps to the joystick button
+     * @param   jagpad_reading composed of JAGPAD_... bits
+     * @return  joystick reading composed of IKBD_JOY_... bits
+     */
+    uint8_t ESWK_MapJagpadToJoystick(uint32_t jagpad_reading);
+
 
 #endif
