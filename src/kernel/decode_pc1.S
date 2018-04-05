@@ -16,10 +16,15 @@
 _ESWK_DepackPC1Picture:
 	movem.l d0-d7/a0-a6,-(sp)
 	movem.l	64(sp),a0-a1    | working pointers from stack
+
+	cmp.b #0x80,(a0)
+	bne file_not_packed
+
 	move.b	1(a0),d1	    | Image resolution
 
-	| copy header data and palette to destination
-	move.w (a0),(a1)
+	| copy header data, mark as unpacked DEGAS file and copy palette to destination
+	clr.b (a1)
+	move.b 1(a0),1(a1)
 	move.w 2(a0),2(a1)
 	move.w 4(a0),4(a1)
 	move.w 6(a0),6(a1)
@@ -90,6 +95,7 @@ End_line:
 	cmpa.l	a1,a5
 	bhi.s	All_lines
 
+file_not_packed:
 	movem.l (sp)+,d0-d7/a0-a6
 	rts
 
