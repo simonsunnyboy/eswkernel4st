@@ -1,3 +1,13 @@
+#
+# Entertainment Software Kernel for Atari ST
+# (c) 2016/18/26 by Matthias Arndt / ASM Software
+#
+# The MIT License applies to this software. Refer to the file COPYING for
+# details.
+#
+# top-level CMakeLists.txt as entry point
+#
+
 cmake_minimum_required(VERSION 2.8)
 
 project(ESWKernel4ST)
@@ -25,34 +35,5 @@ set(CMAKE_ASM_FLAGS "-m68000 -I${KERNEL_SRC}")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_library(eswkernel4st
-	${KERNEL_SRC}/main.c
-	${KERNEL_SRC}/cookie.c
-	${KERNEL_SRC}/screen.c
-	${KERNEL_SRC}/picture.c
-	${KERNEL_SRC}/interrupt_handlers.c
-	${KERNEL_SRC}/decode_pc1.S
-	${KERNEL_SRC}/interrupt.S
-	${KERNEL_SRC}/jagpad.S
-	${KERNEL_SRC}/ikbd_isr.S
-	${KERNEL_SRC}/ikbd_joy.c
-	${KERNEL_SRC}/ikbd_keyb.c
-	${KERNEL_SRC}/ikbd_mouse.c
-	${KERNEL_SRC}/reset.S
-	${KERNEL_SRC}/leonard.S
-	README.md
-	LICENSE
-)
-
-add_executable(demo_isr.tos
-	${TEST_SRC}/demo_isr.c
-)
-
-target_link_libraries(demo_isr.tos eswkernel4st)
-
-add_executable(demo_pc1.tos
-	${TEST_SRC}/demo_pc1.c
-	${TEST_SRC}/demo_pc1.h
-)
-
-target_link_libraries(demo_pc1.tos eswkernel4st)
+add_subdirectory(src)
+add_subdirectory(test)
