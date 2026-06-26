@@ -29,7 +29,7 @@ loop_vbl_queue:
 	move.l (a0)+,a1
 	cmp.l   #0,a1
 	bne     loop_vbl_queue
-	move.l  #_ESWK_int_VBL_ISR, -(a0)           | store user VBL routine into VBL queue
+	move.l  #_ESWK_int_VBL_ISR, -(a0)           | store kernel routine into VBL queue which will run the optional user routine
 
 	rts
 
@@ -37,12 +37,12 @@ loop_vbl_queue:
 | *** new Timer C ISR for calling user routines ***
 _ESWK_TimerC_ISR:
 	movem.l	a0-a6/d0-d7,-(sp)
-	jsr _ESWK_int_200hz_ISR     | call user 200hz routine
+	jsr _ESWK_int_200hz_ISR     | store kernel routine into VBL queue which will run the optional user routine
 	addq.w #1,tccount
 	cmpi.w #4,tccount
 	blt no50hzcall              | check if this is the 4th call...
 	clr.w tccount               | reset counter if yes
-	jsr _ESWK_int_50hz_ISR      | call user 50hz routine for the 4th call of the ISR
+	jsr _ESWK_int_50hz_ISR      | store kernel routine into VBL queue which will run the optional user routine
 
 no50hzcall:
 	movem.l	(sp)+,a0-a6/d0-d7
