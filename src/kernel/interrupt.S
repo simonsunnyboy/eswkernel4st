@@ -29,7 +29,7 @@ loop_vbl_queue:
 	move.l (a0)+,a1
 	cmp.l   #0,a1
 	bne     loop_vbl_queue
-	move.l  #_ESWK_int_50hz_ISR, -(a0)           | store user VBL routine into VBL queue
+	move.l  #_ESWK_int_VBL_ISR, -(a0)           | store user VBL routine into VBL queue
 
 	rts
 
