@@ -29,8 +29,10 @@
  * local variables
  * --------------------------------------------------------------------------
  */
-
-static volatile bool ESWK_int_running;
+/** \brief flag indicating if the kernel is running
+    \details Set to false to terminate the main loop and exit the kernel via \ref ESWK_RequestExit
+ */
+static volatile bool ESWK_int_running; 
 
 /* --------------------------------------------------------------------------
  * kernel internal functions
@@ -79,7 +81,9 @@ int main(void)
 
     UserCode_TerminateLoop();
 
-    return 0;
+    ESWK_int_ResetST();
+
+    return 0; /* never reached due to machine reset, however necessary so the compiler does not complain */
 }
 
 /* --------------------------------------------------------------------------

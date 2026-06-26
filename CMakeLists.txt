@@ -39,6 +39,7 @@ add_library(eswkernel4st
 	${KERNEL_SRC}/ikbd_joy.c
 	${KERNEL_SRC}/ikbd_keyb.c
 	${KERNEL_SRC}/ikbd_mouse.c
+	${KERNEL_SRC}/reset.S
 	${KERNEL_SRC}/eswkernel4st.h
 	${KERNEL_SRC}/eswkernel4st_services.h
 	README.md
