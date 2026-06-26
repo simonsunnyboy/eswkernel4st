@@ -6,13 +6,14 @@
  * details.
  *
  * @file  internals.h
- * @brief internal API definition for interfacing inside th kernel itself
+ * @brief internal API definition for interfacing inside the kernel itself
  * @attention Do not use this header in your own application!
  */
 
 #ifndef INTERNALS_H
     #define INTERNALS_H
 
+    void ESWK_int_InitSTLow(void);
     void ESWK_int_InitScreens(void);
     void ESWK_int_InitInterrupts(void);
 

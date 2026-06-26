@@ -29,8 +29,8 @@
  * local variables
  * --------------------------------------------------------------------------
  */
-/** \brief flag indicating if the kernel is running
-    \details Set to false to terminate the main loop and exit the kernel via \ref ESWK_RequestExit
+/** @brief flag indicating if the kernel is running
+ *  @details Set to false to terminate the main loop and exit the kernel via \ref ESWK_RequestExit
  */
 static volatile bool ESWK_int_running; 
 
@@ -39,7 +39,10 @@ static volatile bool ESWK_int_running;
  * --------------------------------------------------------------------------
  */
 
-int main(void)
+ /** @brief Main kernel function to be run in Supervisor mode
+  *  @details This function initializes the kernel and runs the main loop until the user requests termination.
+  */
+static void ESWK_int_Main(void)
 {
     const uint32_t mch_cookie = ESWK_GetMachine();
 
@@ -53,6 +56,7 @@ int main(void)
     }
 
     /* init kernel subsystems: */
+    ESWK_int_InitSTLow();
     ESWK_int_InitScreens();
     ESWK_int_InitInterrupts();
 
@@ -82,7 +86,11 @@ int main(void)
     UserCode_TerminateLoop();
 
     ESWK_int_ResetST();
+}
 
+int main(void)
+{
+    Supexec(ESWK_int_Main); /* force Supervisor */
     return 0; /* never reached due to machine reset, however necessary so the compiler does not complain */
 }
 
