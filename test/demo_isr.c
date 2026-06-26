@@ -12,8 +12,8 @@
 #include <stdint.h>
 #include <osbind.h>
 
-#include "eswkernel4st.h"
-#include "eswkernel4st_services.h"
+#include "eswkernel4st/eswkernel4st.h"
+#include "eswkernel4st/eswkernel4st_services.h"
 
 volatile uint16_t col = 0x000;
 volatile uint16_t tmr = 0;

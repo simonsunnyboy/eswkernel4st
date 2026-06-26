@@ -10,7 +10,7 @@
  */
 
 #include <stdint.h>
-#include "eswkernel4st_services.h"
+#include "eswkernel4st/eswkernel4st_services.h"
 
 /* --------------------------------------------------------------------------
  * local definitions

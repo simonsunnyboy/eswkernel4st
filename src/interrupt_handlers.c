@@ -16,7 +16,7 @@
 #include <stdlib.h>
 
 #include "internals.h"
-#include "eswkernel4st_services.h"
+#include "eswkernel4st/eswkernel4st_services.h"
 
 
 /* --------------------------------------------------------------------------

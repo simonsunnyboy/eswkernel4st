@@ -12,8 +12,8 @@
 #include <stdint.h>
 #include <osbind.h>
 
-#include "eswkernel4st.h"
-#include "eswkernel4st_services.h"
+#include "eswkernel4st/eswkernel4st.h"
+#include "eswkernel4st/eswkernel4st_services.h"
 
 #include "demo_pc1.h" /* demo picture packed */
 
