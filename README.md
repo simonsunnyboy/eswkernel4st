@@ -62,6 +62,8 @@ The kernel switches to supervisor mode for full hardware access.
 
 Link your sources to a TOS executable without AES usage, creating a classic .TOS application.
 
+The ready compiled static library (.a file) of the kernel shall be linked to the executable.
+
 1. use a minimal C startup to free TOS memory with mshrink(), example from tests can be reused
 2. implement the required API from eswkernel4st.h
 3. use the kernel services if necessary, see eswkernel4st_services.h
