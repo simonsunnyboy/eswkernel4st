@@ -20,22 +20,12 @@ set(ESWKERNEL4ST_TEST_SRC ${CMAKE_CURRENT_LIST_DIR}/test)
 if(NOT DEFINED PROJECT_NAME)
     project(ESWKernel4ST)
 
-    # disable strange gcc assumptions
-    set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
-    set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
+    # configure variables for use with compilation toolchain for test executables
+    set(ATARI_ASM_INCLUDE "${ESWKERNEL4ST_SRC}" CACHE PATH "")
+    set(ATARI_STARTUP_FILE "${ESWKERNEL4ST_TEST_SRC}/startup.S" CACHE FILEPATH "")
 
-    # select Atari ST cross compiler and enable assembly language source files
-    enable_language("ASM")
-
-    set(CMAKE_C_COMPILER m68k-atari-mint-gcc)
-    set(CMAKE_ASM_COMPILER m68k-atari-mint-as)
-    set(CMAKE_AR m68k-atari-mint-ar)
-    set(CMAKE_RANLIB m68k-atari-mint-ranlib)
-    set(CMAKE_C_FLAGS "-m68000 -O3 -fomit-frame-pointer -Wextra -Wall -mshort -nostdlib -std=c99")
-    set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_C_FLAGS} ${ESWKERNEL4ST_TEST_SRC}/startup.S" )
-
-    # include directories for assembly sources
-    set(CMAKE_ASM_FLAGS "-m68000 -I${ESWKERNEL4ST_SRC}")
+    # include toolchain
+    include(${CMAKE_CURRENT_LIST_DIR}/m68k-atari-mint.cmake)
 
     set(ESWKERNEL4ST_ENABLE_TEST ON)
 else()
