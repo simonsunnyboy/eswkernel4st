@@ -158,3 +158,10 @@ If the applications desires to not support a specific machine, it is recommended
 intercept the _MCH cookie inside the screen buffer allocation function accordingly.
 
 Alternatively do this in your startup code.
+
+
+## ChangeLog
+
+### V1.0.0
+
+- initial feature complete and (hopefully) bugfixed version
