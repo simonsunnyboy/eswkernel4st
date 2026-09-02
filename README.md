@@ -58,6 +58,9 @@ No support for multitasking operating systems. If the program runs with MinT or 
 
 The kernel switches to supervisor mode for full hardware access.
 
+The code assumes the regular Atari ST stack usage for 16bit words, e.g. -mshort is assumed for 
+compilation and linkage.
+
 ## Integration manual
 
 Link your sources to a TOS executable without AES usage, creating a classic .TOS application.
@@ -67,3 +70,8 @@ The ready compiled static library (.a file) of the kernel shall be linked to the
 1. use a minimal C startup to free TOS memory with mshrink(), example from tests can be reused
 2. implement the required API from eswkernel4st.h
 3. use the kernel services if necessary, see eswkernel4st_services.h
+
+If included into another CMake project, the test will not be build.
+The C compiler configuration of the wrapping project will be used to compile to library.
+
+If build standalone, the compiler configuration from m68k-atari-mint.cmake will be used.
