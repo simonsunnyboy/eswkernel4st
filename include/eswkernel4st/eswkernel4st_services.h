@@ -51,27 +51,27 @@
      * --------------------------------------------------------------------------
      */
 
-    #define JAGPAD_UP   		0x00000001  /**< ... */
-    #define JAGPAD_DOWN 		0x00000002
-    #define JAGPAD_LEFT		 	0x00000004
-    #define JAGPAD_RIGHT 		0x00000008
-    #define JAGPAD_BUT_A   		0x00000010
-    #define JAGPAD_BUT_B   		0x00000020
-    #define JAGPAD_BUT_C    	0x00000040
-    #define JAGPAD_BUT_PAUSE    0x00000080
-    #define JAGPAD_BUT_OPTION   0x00000100
-    #define JAGPAD_BUT_0        0x00000200
-    #define JAGPAD_BUT_8        0x00000400
-    #define JAGPAD_BUT_5        0x00000800
-    #define JAGPAD_BUT_2        0x00001000
-    #define JAGPAD_BUT_HASH     0x00002000
-    #define JAGPAD_BUT_9        0x00004000
-    #define JAGPAD_BUT_6        0x00008000
-    #define JAGPAD_BUT_3        0x00010000
-    #define JAGPAD_BUT_STAR     0x00020000
-    #define JAGPAD_BUT_7        0x00040000
-    #define JAGPAD_BUT_4        0x00080000
-    #define JAGPAD_BUT_1        0x00100000
+    #define JAGPAD_UP   		0x00000001UL  /**< ... */
+    #define JAGPAD_DOWN 		0x00000002UL  /**< ... */
+    #define JAGPAD_LEFT		 	0x00000004UL  /**< ... */
+    #define JAGPAD_RIGHT 		0x00000008UL  /**< ... */
+    #define JAGPAD_BUT_A   		0x00000010UL  /**< ... */
+    #define JAGPAD_BUT_B   		0x00000020UL  /**< ... */
+    #define JAGPAD_BUT_C    	0x00000040UL  /**< ... */
+    #define JAGPAD_BUT_PAUSE    0x00000080UL  /**< ... */
+    #define JAGPAD_BUT_OPTION   0x00000100UL  /**< ... */
+    #define JAGPAD_BUT_0        0x00000200UL  /**< ... */
+    #define JAGPAD_BUT_8        0x00000400UL  /**< ... */
+    #define JAGPAD_BUT_5        0x00000800UL  /**< ... */
+    #define JAGPAD_BUT_2        0x00001000UL  /**< ... */
+    #define JAGPAD_BUT_HASH     0x00002000UL  /**< ... */
+    #define JAGPAD_BUT_9        0x00004000UL  /**< ... */
+    #define JAGPAD_BUT_6        0x00008000UL  /**< ... */
+    #define JAGPAD_BUT_3        0x00010000UL  /**< ... */
+    #define JAGPAD_BUT_STAR     0x00020000UL  /**< ... */
+    #define JAGPAD_BUT_7        0x00040000UL  /**< ... */
+    #define JAGPAD_BUT_4        0x00080000UL  /**< ... */
+    #define JAGPAD_BUT_1        0x00100000UL  /**< ... */
 
     #define JAGPAD_FIRE         (JAGPAD_BUT_A|JAGPAD_BUT_B|JAGPAD_BUT_C)  /**< any of the buttons A,B or C is pressed */
 
@@ -80,11 +80,11 @@
      * --------------------------------------------------------------------------
      */
 
-    #define IKBD_JOY_UP          0x01
-    #define IKBD_JOY_DOWN        0x02
-    #define IKBD_JOY_LEFT        0x04
-    #define IKBD_JOY_RIGHT       0x08
-    #define IKBD_JOY_FIRE        0x80
+    #define IKBD_JOY_UP          0x01U /** < ... */
+    #define IKBD_JOY_DOWN        0x02U /** < ... */
+    #define IKBD_JOY_LEFT        0x04U /** < ... */
+    #define IKBD_JOY_RIGHT       0x08U /** < ... */
+    #define IKBD_JOY_FIRE        0x80U /** < ... */
 
     /* --------------------------------------------------------------------------
      * mouse reading structure
@@ -106,9 +106,9 @@
      * mouse button state values
      * --------------------------------------------------------------------------
      */
-    #define IKBD_MOUSE_BUTTON_LEFT  1
-    #define IKBD_MOUSE_BUTTON_RIGHT 2
-    #define IKBD_MOUSE_BOTH_BUTTONS 3
+    #define IKBD_MOUSE_BUTTON_LEFT  1U  /** < ... */
+    #define IKBD_MOUSE_BUTTON_RIGHT 2U  /** < ... */
+    #define IKBD_MOUSE_BOTH_BUTTONS 3U  /** < ... */
 
     /* --------------------------------------------------------------------------
      * key press/release flags
@@ -130,36 +130,36 @@
      * --------------------------------------------------------------------------
      */
 
-    #define IKBD_KEY_F1          59
-    #define IKBD_KEY_F2          60
-    #define IKBD_KEY_F3          61
-    #define IKBD_KEY_F4          62
-    #define IKBD_KEY_F5          63
-    #define IKBD_KEY_F6          64
-    #define IKBD_KEY_F7          65
-    #define IKBD_KEY_F8          66
-    #define IKBD_KEY_F9          67
-    #define IKBD_KEY_F10         68
+    #define IKBD_KEY_F1          59U  /**< ... */
+    #define IKBD_KEY_F2          60U  /**< ... */
+    #define IKBD_KEY_F3          61U  /**< ... */
+    #define IKBD_KEY_F4          62U  /**< ... */
+    #define IKBD_KEY_F5          63U  /**< ... */
+    #define IKBD_KEY_F6          64U  /**< ... */
+    #define IKBD_KEY_F7          65U  /**< ... */
+    #define IKBD_KEY_F8          66U  /**< ... */
+    #define IKBD_KEY_F9          67U  /**< ... */
+    #define IKBD_KEY_F10         68U  /**< ... */
 
-    #define IKBD_KEY_SPACE       0x39
-    #define IKBD_KEY_RETURN      0x1c
-    #define IKBD_KEY_UP          0x48
-    #define IKBD_KEY_DOWN        0x50
-    #define IKBD_KEY_LEFT        0x4b
-    #define IKBD_KEY_RIGHT       0x4d
-    #define IKBD_KEY_BACKSPACE   0x0e
-    #define IKBD_KEY_DELETE      0x53
-    #define IKBD_KEY_ESC         0x01
-    #define IKBD_KEY_TAB         0x0F
-    #define IKBD_KEY_CONTROL     0x1d
-    #define IKBD_KEY_ALT         0x38
-    #define IKBD_KEY_LSHIFT      0x2a
-    #define IKBD_KEY_RSHIFT      0x36
-    #define IKBD_KEY_INSERT      0x52
-    #define IKBD_KEY_HELP        0x62
-    #define IKBD_KEY_UNDO        0x61
-    #define IKBD_KEY_CLRHOME     0x47
-    #define IKBD_KEY_CAPSLOCK    0x3a
+    #define IKBD_KEY_SPACE       0x39U  /**< ... */
+    #define IKBD_KEY_RETURN      0x1CU  /**< ... */
+    #define IKBD_KEY_UP          0x48U  /**< ... */
+    #define IKBD_KEY_DOWN        0x50U  /**< ... */
+    #define IKBD_KEY_LEFT        0x4BU  /**< ... */
+    #define IKBD_KEY_RIGHT       0x4DU  /**< ... */
+    #define IKBD_KEY_BACKSPACE   0x0EU  /**< ... */
+    #define IKBD_KEY_DELETE      0x53U  /**< ... */
+    #define IKBD_KEY_ESC         0x01U  /**< ... */
+    #define IKBD_KEY_TAB         0x0FU  /**< ... */
+    #define IKBD_KEY_CONTROL     0x1DU  /**< ... */
+    #define IKBD_KEY_ALT         0x38U  /**< ... */
+    #define IKBD_KEY_LSHIFT      0x2AU  /**< ... */
+    #define IKBD_KEY_RSHIFT      0x36U  /**< ... */
+    #define IKBD_KEY_INSERT      0x52U  /**< ... */
+    #define IKBD_KEY_HELP        0x62U  /**< ... */
+    #define IKBD_KEY_UNDO        0x61U  /**< ... */
+    #define IKBD_KEY_CLRHOME     0x47U  /**< ... */
+    #define IKBD_KEY_CAPSLOCK    0x3AU  /**< ... */
 
 
     /**

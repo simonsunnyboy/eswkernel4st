@@ -17,7 +17,7 @@
  * --------------------------------------------------------------------------
  */
 
-#define COOKIEJAR_ADDRESS 0x5A0U   /**< TOS cookie jar address in RAM */
+#define COOKIEJAR_ADDRESS 0x5A0UL   /**< TOS cookie jar address in RAM */
 
 /* --------------------------------------------------------------------------
  * public user accessible functions
@@ -34,7 +34,7 @@ uint32_t ESWK_GetCookie(uint32_t cookietag)
 		/* if we have a cookie jar: */
         while((*cptr != cookietag)&&(*cptr != 0))
 		{
-			/* loop through all cookies */
+			/* loop through all cookies containing TAG and VALUE */
 			cptr = cptr + 2;
 		}
         if(*cptr == cookietag)

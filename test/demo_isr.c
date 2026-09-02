@@ -15,8 +15,8 @@
 #include "eswkernel4st/eswkernel4st.h"
 #include "eswkernel4st/eswkernel4st_services.h"
 
-volatile uint16_t col = 0x000;
-volatile uint16_t tmr = 0;
+volatile uint16_t col = 0x000U;
+volatile uint16_t tmr = 0U;
 
 static void UserCode_50Hz_ISR(void)
 {
@@ -29,22 +29,22 @@ static void UserCode_50Hz_ISR(void)
 
 static void UserCode_200Hz_ISR(void)
 {
-    *(uint16_t *)0xFFFF8240 = col;
+    *(uint16_t *)0xFFFF8240UL = col;
     col += 2;
 
 }
 
 static void UserCode_VBL_ISR(void)
 {
-    col = 0x000;
+    col = 0x000U;
 }
 
 void UserCode_Init(void)
 {
-    static uint16_t my_palette[] = { 0x0000, 0x0000, 0x0000, 0x0000,
-                                     0x0000, 0x0000, 0x0000, 0x0000,
-                                     0x0000, 0x0000, 0x0000, 0x0000,
-                                     0x0000, 0x0000, 0x0000, 0x0FFF
+    static uint16_t my_palette[] = { 0x0000U, 0x0000U, 0x0000U, 0x0000U,
+                                     0x0000U, 0x0000U, 0x0000U, 0x0000U,
+                                     0x0000U, 0x0000U, 0x0000U, 0x0000U,
+                                     0x0000U, 0x0000U, 0x0000U, 0x0FFFU
                                    };
     ESWK_SetPalette(my_palette);
 

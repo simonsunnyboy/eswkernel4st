@@ -21,7 +21,7 @@
  * --------------------------------------------------------------------------
  */
 
-#define _200HZ_TICK (*(volatile uint32_t const *)0x000004baUL)
+#define _200HZ_TICK (*(volatile uint32_t const *)0x000004BAUL)
 
 /* --------------------------------------------------------------------------
  * local variables
@@ -103,7 +103,7 @@ ESWK_KeyPress ESWK_IKBD_ReadKey(uint8_t scancode)
     ESWK_KeyPress keystatus = ESWK_IKBD_KEY_RELEASED;
 
 
-    if((scancode & 0x80) != 0)
+    if((scancode & 0x80U) != 0)
     {
         /* upper bit of scancode set -> scancode is invalid */
         keystatus = ESWK_IKBD_KEY_RELEASED;
