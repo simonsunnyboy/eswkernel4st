@@ -1,6 +1,6 @@
 /**
  * Entertainment Software Kernel for Atari ST
- * (c) 2016/18 by Matthias Arndt / ASM Software
+ * (c) 2016/18/26 by Matthias Arndt / ASM Software
  *
  * The MIT License applies to this software. Refer to the file COPYING for
  * details.
