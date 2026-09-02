@@ -14,6 +14,11 @@
 
     #include <stdint.h>
 
+    #ifdef __cplusplus
+    extern "C"
+    {
+    #endif
+
     /**
      * @brief initialize the user application from the kernel
      */
@@ -30,5 +35,9 @@
      * @details The kernel calls this function when termination has been requested.
      */
     void UserCode_TerminateLoop(void);
+
+    #ifdef __cplusplus
+    }
+    #endif
 
 #endif

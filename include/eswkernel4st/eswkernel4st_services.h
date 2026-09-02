@@ -14,6 +14,11 @@
     #include <stdint.h>
     #include <stdbool.h>
 
+    #ifdef __cplusplus
+    extern "C"
+    {
+    #endif
+
     /* --------------------------------------------------------------------------
      * cookie tag values
      * --------------------------------------------------------------------------
@@ -395,5 +400,8 @@
      */
     uint8_t ESWK_MapJagpadToJoystick(uint32_t jagpad_reading);
 
+    #ifdef __cplusplus
+    }
+    #endif
 
 #endif
