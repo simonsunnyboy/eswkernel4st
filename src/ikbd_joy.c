@@ -35,11 +35,6 @@ extern volatile uint8_t IKBD_Joystick1;      /**< Joystick state on port 1 (driv
  * --------------------------------------------------------------------------
  */
 
-/**
- * @brief  read given joystick state
- * @param  portnr indicated the joystick port queried
- * @return joystick reading composed of IKBD_JOY_... bits
- */
 uint8_t ESWK_IKBD_ReadJoystick(uint8_t portnr)
 {
     uint8_t joyreading = IKBD_Joystick1;
@@ -52,12 +47,6 @@ uint8_t ESWK_IKBD_ReadJoystick(uint8_t portnr)
     return joyreading;
 }
 
-/**
- * @brief   map Atari Powerpad reading to IKBD compatible joystick reading
- * @details Any powerpad fire button maps to the joystick button
- * @param   jagpad_reading composed of JAGPAD_... bits
- * @return  joystick reading composed of IKBD_JOY_... bits
- */
 uint8_t ESWK_MapJagpadToJoystick(uint32_t jagpad_reading)
 {
     uint32_t jagpad_masked = (jagpad_reading & (JAGPAD_UP|JAGPAD_DOWN|JAGPAD_LEFT|JAGPAD_RIGHT));

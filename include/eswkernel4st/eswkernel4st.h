@@ -14,8 +14,21 @@
 
     #include <stdint.h>
 
+    /**
+     * @brief initialize the user application from the kernel
+     */
     void UserCode_Init(void);
+
+    /**
+     * @brief main application loop
+     * @details The kernel calls this function untile termination has been requested.
+     */
     void UserCode_Mainloop(void);
+
+    /**
+     * @brief terminate the application loop
+     * @details The kernel calls this function when termination has been requested.
+     */
     void UserCode_TerminateLoop(void);
 
 #endif

@@ -22,23 +22,25 @@
 
 /**
  * @brief internal data structure for header of NEOCHROME picture
+ * @details The header contains 128 bytes before the first data byte.
  */
 typedef struct
 {
-    uint32_t unused1;                 /**< ... */
-    uint16_t palette[16];             /**< ... */
-    uint32_t unused2[23];             /**< ... */
-    uint16_t first_screen_data_word;  /**< ... */
+    uint32_t unused1;                 /**< unused meta information */
+    uint16_t palette[16];             /**< ST compatible palette data */
+    uint32_t unused2[23];             /**< unused data for color animation */
+    uint16_t first_screen_data_word;  /**< first word of screen data */
 } NEO_header;
 
 /**
  * @brief internal data structure for header of DEGAS picture
+ * @details The header contains 34 bytes before the first data byte.
  */
 typedef struct
 {
-    uint16_t unused1;                 /**< ... */
-    uint16_t palette[16];             /**< ... */
-    uint16_t first_screen_data_word;  /**< ... */
+    uint16_t unused1;                 /**< unused meta information */
+    uint16_t palette[16];             /**< ST compatible palette data */
+    uint16_t first_screen_data_word;  /**< first word of screen data */
 } DEGAS_header;
 
 /* --------------------------------------------------------------------------
@@ -57,13 +59,6 @@ typedef struct
  * --------------------------------------------------------------------------
  */
 
-/**
- * @brief   calculates addresses for screen and palette information for NEOCHROME picture in RAM
- * @details Use this to access the data parts of the picture independently.
- * @param   neopicture_addr points to NEOCHROME picture in RAM
- * @param   dest_screen_data is updated with a RAM address relative to neopicture_addr pointing to screen pixel data
- * @param   dest_palette_data is updated with a RAM address relative to neopicture_addr pointing to palette information
- */
 void ESWK_CalcNEOPictureDataAddr(void *neopicture_addr, void *dest_screen_data, void *dest_palette_data)
 {
     /* decode file header and calculate addresses: */
@@ -78,13 +73,6 @@ void ESWK_CalcNEOPictureDataAddr(void *neopicture_addr, void *dest_screen_data, 
     return;
 }
 
-/**
- * @brief   calculates addresses for screen and palette information for DEGAS picture in RAM
- * @details Use this to access the data parts of the picture independently.
- * @param   degaspicture_addr points to DEGAS picture in RAM
- * @param   dest_screen_data is updated with a RAM address relative to neopicture_addr pointing to screen pixel data
- * @param   dest_palette_data is updated with a RAM address relative to neopicture_addr pointing to palette information
- */
 void ESWK_CalcPI1PictureDataAddr(void *degaspicture_addr, void *dest_screen_data, void *dest_palette_data)
 {
     /* decode file header and calculate addresses: */
@@ -99,11 +87,6 @@ void ESWK_CalcPI1PictureDataAddr(void *degaspicture_addr, void *dest_screen_data
     return;
 }
 
-/**
- * @brief display NEOCHROME picture with setting the associated palette
- * @param neopicture_addr points to NEOCHROME file in RAM
- * @param dest points to destionation screen
- */
 void ESWK_ShowNEOPicture(void *neopicture_addr, void *dest)
 {
     void * ptr_data = NULL;
@@ -115,11 +98,6 @@ void ESWK_ShowNEOPicture(void *neopicture_addr, void *dest)
     return;
 }
 
-/**
- * @brief display DEGAS picture with setting the associated palette
- * @param degaspicture_addr points to DEGAS file in RAM
- * @param dest points to destionation screen
- */
 void ESWK_ShowPI1Picture(void *degaspicture_addr, void *dest)
 {
     DEGAS_header * header = (DEGAS_header *)degaspicture_addr;

@@ -43,9 +43,6 @@ extern volatile uint8_t IKBD_Mousemode;      /**< flag indicating if mouse is ac
  * --------------------------------------------------------------------------
  */
 
-/**
- * @brief flushes all pending keyboard and joystick events
- */
 void ESWK_IKBD_Flush(void)
 {
     uint16_t i;
@@ -91,12 +88,6 @@ void ESWK_IKBD_Flush(void)
     return;
 }
 
-/**
- * @brief   read and debounce a key by scancode
- * @details If the given key is pressed, the status is cleared internally. Use to read input.
- * @return  key press state
- * @see     ESWK_KeyPress
- */
 ESWK_KeyPress ESWK_IKBD_ReadKey(uint8_t scancode)
 {
     /* undefined key state -> means key not pressed */
@@ -126,12 +117,6 @@ ESWK_KeyPress ESWK_IKBD_ReadKey(uint8_t scancode)
     return keystatus;
 }
 
-/**
- * @brief   read key press state by scancode
- * @details The internal state is not changed. A subsequent read still may return the state "key is pressed down"
- * @return  key press state
- * @see     ESWK_KeyPress
- */
 ESWK_KeyPress ESWK_IKBD_IsKeyPressed(uint8_t scancode)
 {
     ESWK_KeyPress keystatus = (ESWK_KeyPress)IKBD_Keyboard[scancode];

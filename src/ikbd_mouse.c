@@ -24,11 +24,11 @@
  */
 typedef struct
 {
-    ESWK_MouseState state;
-    int16_t  w;
-    int16_t  h;
-    bool     limit;
-    uint8_t  threshold;
+    ESWK_MouseState state;    /**< internal mouse state */
+    int16_t  w;               /**< width of the screen */
+    int16_t  h;               /**< height of the screen */
+    bool     limit;           /**< flag to indicate if mouse coordinates should be limited */
+    uint8_t  threshold;       /**< threshold for mouse movement scaling */
 } ESWK_int_MouseData;
 
 
@@ -39,10 +39,12 @@ typedef struct
 
 /**
  * @brief kernel internal mouse data in RAM
+ * @details The default config is for a 320x200 ST-LOW screen with mouse
+ *          pointer centered.
  */
 static volatile ESWK_int_MouseData ESWK_Mouse =
 {
-    {0,0,0}, 320,200,true,128
+    {160,100,0}, 320,200,true,128
 };
 
 /* --------------------------------------------------------------------------
@@ -60,9 +62,6 @@ extern volatile int16_t        IKBD_MouseY;         /**< Mouse Y position (drive
  * --------------------------------------------------------------------------
  */
 
-/**
- * @brief reads the accumulated mouse packets and update the mouse position
- */
 void ESWK_IKBD_ReadMouse(ESWK_MouseState * mouseData)
 {
     int16_t xoffset, yoffset;
@@ -123,18 +122,12 @@ void ESWK_IKBD_ReadMouse(ESWK_MouseState * mouseData)
     return;
 }
 
-/**
- * @brief allows to configure the scaling of relative mouse movement
- */
 void ESWK_IKBD_SetMouseThreshold(uint8_t new_threshold)
 {
     ESWK_Mouse.threshold = new_threshold;
     return;
 }
 
-/**
- * @brief set current mouse position and define the screen size
- */
 void ESWK_IKBD_SetMouseOrigin(int16_t x, int16_t y, uint16_t w, uint16_t h)
 {
     ESWK_Mouse.state.x = x;

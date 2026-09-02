@@ -163,7 +163,7 @@
 
 
     /**
-     * @brief callback for the user application to terminate the main loop
+     * @brief callback for the user application to request termination of the main loop
      */
     void ESWK_RequestExit(void);
 
@@ -209,7 +209,7 @@
     void ESWK_SetPalette(void * paletteaddr);
 
     /**
-     * @brief   read a complete 16 color palette in ST format
+     * @brief   read the complete 16 color palette from hardware in ST format
      * @details A palette consists of 16 consecutive uint16_t values.
      * @param   paletteaddr points to destination in RAM
      */
@@ -271,6 +271,9 @@
     /**
      * @brief   set function pointer to call from VBL interrupt
      * @details If NULL is given, no routine is executed.
+     *          The VBL frequency depends on the usr's connected monitor type.
+     *          This is typically 50Hz for PAL and 60Hz for NTSC.
+     *          Use the dedicated 50Hz and 200Hz timer functions for non-video related timing.
      * @param   userrout is a function pointer with void ...(void) prototype
      */
     void ESWK_SetVBLRoutine(void (*userrout)(void));
@@ -300,11 +303,13 @@
 
     /**
      * @brief checks if the kernel detected Extended Joystick Ports
+     * @return true if Extended Joystick Ports are detected, false otherwise
      */
     bool ESWK_HasJagpad(void);
 
     /**
      * @brief install optional IKBD handling to read keyboard, mouse and joystick
+     * @details The applications calls this from initialization.
      */
     void ESWK_InstallIKBD(void);
 
@@ -342,6 +347,8 @@
 
     /**
      * @brief reads the accumulated mouse packets and update the mouse position
+     * @param mouseData pointer to structure to receive the current mouse state
+     * @see ESWK_MouseState
      */
     void ESWK_IKBD_ReadMouse(ESWK_MouseState * mouseData);
 
@@ -351,12 +358,18 @@
     void ESWK_IKBD_Flush(void);
 
     /**
-     * @brief read and debounce a key by scancode
+     * @brief   read and debounce a key by scancode
+     * @details If the given key is pressed, the status is cleared internally. Use to read input.
+     * @return  key press state
+     * @see     ESWK_KeyPress
      */
     ESWK_KeyPress ESWK_IKBD_ReadKey(uint8_t scancode);
 
     /**
-     * @brief read key press state by scancode
+     * @brief   read key press state by scancode
+     * @details The internal state is not changed. A subsequent read still may return the state "key is pressed down"
+     * @return  key press state
+     * @see     ESWK_KeyPress
      */
     ESWK_KeyPress ESWK_IKBD_IsKeyPressed(uint8_t scancode);
 

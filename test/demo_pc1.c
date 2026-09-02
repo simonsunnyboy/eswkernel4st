@@ -17,9 +17,9 @@
 
 #include "demo_pc1.h" /* demo picture packed */
 
-uint8_t degas_picture[32034];
+static uint8_t degas_picture[32034];  /**< DEGAS picture buffer */
 
-volatile uint16_t tmr = 0;
+static volatile uint16_t tmr = 0;     /**< timer */
 
 static void UserCode_50Hz_ISR(void)
 {

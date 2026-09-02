@@ -15,8 +15,8 @@
 #include "eswkernel4st/eswkernel4st.h"
 #include "eswkernel4st/eswkernel4st_services.h"
 
-volatile uint16_t col = 0x000U;
-volatile uint16_t tmr = 0U;
+static volatile uint16_t col = 0x000U;   /**< current color */
+static volatile uint16_t tmr = 0U;       /**< timer */
 
 static void UserCode_50Hz_ISR(void)
 {
@@ -27,6 +27,9 @@ static void UserCode_50Hz_ISR(void)
     }
 }
 
+/**
+ * @brief update the color with every 200Hz interrupt
+ */
 static void UserCode_200Hz_ISR(void)
 {
     *(uint16_t *)0xFFFF8240UL = col;
@@ -34,6 +37,9 @@ static void UserCode_200Hz_ISR(void)
 
 }
 
+/**
+ * @brief VBL handler to reset the color to black at the beginning of every screen refresh
+ */
 static void UserCode_VBL_ISR(void)
 {
     col = 0x000U;

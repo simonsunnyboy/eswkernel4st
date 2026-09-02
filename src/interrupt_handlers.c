@@ -41,7 +41,6 @@ volatile uint32_t ESWK_int_JagpadReading[2];  /**< internal state of Atari Power
  * --------------------------------------------------------------------------
  */
 
-
 void ESWK_int_50hz_ISR(void)
 {
     /* service Atari Powerpads if available on hardware: */
@@ -109,6 +108,10 @@ void ESWK_int_SetJagpadRoutine(uint32_t mch_cookie_value)
  * --------------------------------------------------------------------------
  */
 
+/**
+ * @details The function @ref ESWK_int_SetJagpadRoutine has to be called first
+ *          to enable Atari Powerpad support and set the value.
+ */
 bool ESWK_HasJagpad(void)
 {
     bool has_ejp = false;
