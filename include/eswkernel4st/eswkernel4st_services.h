@@ -177,6 +177,15 @@
 
 
     /**
+     * @brief data structure to pass screen buffer locations
+     */
+    typedef struct
+    {
+        void * logbase;   /**< pointer to logical screen buffer */
+        void * physbase;  /**< pointer to physical screen buffer */
+    } ScreenBufferInformation;
+
+    /**
      * @brief callback for the user application to request termination of the main loop
      */
     void ESWK_RequestExit(void);
@@ -195,6 +204,20 @@
      * @see ESWK_SwapScreens
      */
     extern void * ESWK_physbase;
+
+    /**
+     * @brief   initialize and set the screen buffer addresses for logical and physical screen
+     * @details Addresses should be aligned at 256 byte boundaries.
+     * @param   buffers points to structure receiving logical and physical screen addresses
+     */
+    void ESWK_InitScreenBuffers(ScreenBufferInformation* buffers);
+
+    /**
+     * @brief   aligns a screen buffer address to a 256 byte boundary
+     * @param   addr the address to align, not altered
+     * @return  the aligned address
+     */
+    uintptr_t ESWK_AlignScreenBufferAddress(uintptr_t addr);
 
     /**
      * @brief   swaps screen buffers and activates the new physical screen

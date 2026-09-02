@@ -26,8 +26,6 @@ void * ESWK_physbase;   /**< physical screen address, currently active and displ
  * --------------------------------------------------------------------------
  */
 
-static uint8_t new_screen_buffer[64256];  /**< RAM buffer for 2 Atari ST screens + overspil to align addresses on 256 byte boundaries */
-
 /* --------------------------------------------------------------------------
  * kernel internal functions
  * --------------------------------------------------------------------------
@@ -35,14 +33,12 @@ static uint8_t new_screen_buffer[64256];  /**< RAM buffer for 2 Atari ST screens
 
 void ESWK_int_InitScreens(void)
 {
-    /* set new screen address */
-    uint32_t new_screen = (uint32_t)&new_screen_buffer[0];
+    /* call screen buffer initialization */
+    ScreenBufferInformation buffers;
+    ESWK_InitScreenBuffers(&buffers);
 
-    new_screen += 256;
-    new_screen &= 0xFFFFFF00UL;
-
-    ESWK_physbase = (void *)new_screen;
-    ESWK_logbase  = (void *)(new_screen + 32000);
+    ESWK_logbase = buffers.logbase;
+    ESWK_physbase = buffers.physbase;
 
     ESWK_SwapScreens();
 
@@ -53,6 +49,14 @@ void ESWK_int_InitScreens(void)
  * public user accessible functions
  * --------------------------------------------------------------------------
  */
+
+uintptr_t ESWK_AlignScreenBufferAddress(uintptr_t addr)
+{
+    addr += 256;
+    addr &= 0xFFFFFF00UL;
+
+    return addr;
+}
 
 void ESWK_SwapScreens(void)
 {

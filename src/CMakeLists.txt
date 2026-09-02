@@ -8,7 +8,9 @@
 # src/CMakeLists.txt for actual kernel library
 #
 
-add_library(eswkernel4st
+option(ESWK_ENABLE_SCREENBUFFER "Enable screen buffer initialization" ON)
+
+set(ESWK_SOURCES
 	main.c
 	cookie.c
 	screen.c
@@ -24,3 +26,10 @@ add_library(eswkernel4st
 	reset.S
 	leonard.S
 )
+
+if(ESWK_ENABLE_SCREENBUFFER)
+	message(STATUS "ESWK_ENABLE_SCREENBUFFER is ON: screen buffer initialization will be compiled into the kernel")
+    list(APPEND ESWK_SOURCES screen_buffer.c)
+endif()
+
+add_library(eswkernel4st ${ESWK_SOURCES})
