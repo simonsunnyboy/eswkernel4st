@@ -36,7 +36,7 @@ The kernel provides
 - abstraction for flip screens and palette updates
 - screen clear and copy functions
 - basic .NEO, .PI1 and .PC1 support
-- IKBD and Jaguar power pad support (with runtime detection of features)
+- (optional) IKBD and Jaguar power pad support (with runtime detection of features)
 - _MCH cookie interfaces
 - TOS may be accessed if necessary including its VBL handler
 
@@ -75,3 +75,86 @@ If included into another CMake project, the test will not be build.
 The C compiler configuration of the wrapping project will be used to compile to library.
 
 If build standalone, the compiler configuration from m68k-atari-mint.cmake will be used.
+
+## Interrupt service routines
+
+### VBL handler
+
+The VBL handler should be used for video synchronization exclusively.
+Its call rate may vary depending on the monitor type used by the users.
+
+This is typically 50Hz for PAL systems or 60Hz for NTSC systems.
+
+As the application cannot know which is in use, it is best practice to handle
+all non-video timing from Timer C.
+
+The callback can be used to hook rasterbar handling if necessary.
+
+### Timer C
+
+The regular TOS Timer C interrupt at 200Hz is still in use.
+
+This is also necessary for operation of certain harddisk drivers so disabling it
+might lead to problems when accesses files on disk.
+
+The kernel keeps calling the 200Hz routine and allows a user routine to be called
+in this interval.
+
+This also allows to call SNDH music playback routines that derive their own playback
+rate from the 200Hz calls.
+
+
+Additionally every 4th time a 50Hz routine is called.
+The kernel itself does not use this but a user routine can be used to determine
+steady time points for updates.
+
+This is a good location to count how often your game logic shall update.
+
+### IKBD handler
+
+The IKBD handling interupt is not enabled by the kernel itself.
+
+The application must enable it if desired.
+
+Its input input state can then be queried with the associated service functions.
+
+Cyclic handling is best placed in the VBL or 50Hz handler.
+
+The kernel may be compiled without the ikbd_*.* source files if desired.
+
+## Screen buffer allocation
+
+Screen buffer allocation in memory is optional.
+All screen buffer addresses must be aligned on 256 byte boundaries (ST Shifter limitation)
+
+By default a simple flip screen with 2 pages is provided.
+Screens are cleared. They are consecutive in memory without overspill areas.
+
+The application may opt not to enable this regular routine and provide its own.
+
+## Jagpad handling
+
+Atari Jaguar Powerpads are optionally supported if the machine has the physical ports.
+
+Presence of ports is determined through the _MCH cookie. 
+If enabled, their state is polled during the 50Hz interrupt.
+
+### Supported machines
+
+- Atari 1040STE
+- Atari Falcon 030
+
+### Unsupported machines
+
+- Atari STF
+- Atari Mega ST
+- Atari Mega STE
+
+## STE only software
+
+The kernel is designed to handle STF, STE, TT and Falcon software.
+
+If the applications desires to not support a specific machine, it is recommended to
+intercept the _MCH cookie inside the screen buffer allocation function accordingly.
+
+Alternatively do this in your startup code.
