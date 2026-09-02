@@ -59,50 +59,42 @@ typedef struct
  * --------------------------------------------------------------------------
  */
 
-void ESWK_CalcNEOPictureDataAddr(void *neopicture_addr, void *dest_screen_data, void *dest_palette_data)
+void ESWK_CalcNEOPictureDataAddr(void *neopicture_addr, PictureInformation * picinfo)
 {
     /* decode file header and calculate addresses: */
     NEO_header * header = (NEO_header *)neopicture_addr;
-    dest_screen_data = &(header->first_screen_data_word);
-    dest_palette_data = &(header->palette[0]);
-
-    /* parameters are updated butnot directly used: */
-    (void)dest_screen_data;
-    (void)dest_palette_data;
+    picinfo->data = (void *)&(header->first_screen_data_word);
+    picinfo->palette = (void *)&(header->palette[0]);
 
     return;
 }
 
-void ESWK_CalcPI1PictureDataAddr(void *degaspicture_addr, void *dest_screen_data, void *dest_palette_data)
+void ESWK_CalcPI1PictureDataAddr(void *degaspicture_addr,  PictureInformation * picinfo)
 {
     /* decode file header and calculate addresses: */
-    NEO_header * header = (NEO_header *)degaspicture_addr;
-    dest_screen_data = &(header->first_screen_data_word);
-    dest_palette_data = &(header->palette[0]);
-
-    /* parameters are updated butnot directly used: */
-    (void)dest_screen_data;
-    (void)dest_palette_data;
+    DEGAS_header * header = (DEGAS_header *)degaspicture_addr;
+    picinfo->data = (void *)&(header->first_screen_data_word);
+    picinfo->palette = (void *)&(header->palette[0]);
 
     return;
 }
 
 void ESWK_ShowNEOPicture(void *neopicture_addr, void *dest)
 {
-    void * ptr_data = NULL;
-    void * ptr_pal = NULL;
-    ESWK_CalcNEOPictureDataAddr(neopicture_addr, ptr_data, ptr_pal);
-    ESWK_SetPalette(ptr_pal);
-    ESWK_CopyScreen(ptr_data, dest);
+    PictureInformation current;
+    ESWK_CalcNEOPictureDataAddr(neopicture_addr, &current);
+    ESWK_SetPalette(current.palette);
+    ESWK_CopyScreen(current.data, dest);
 
     return;
 }
 
 void ESWK_ShowPI1Picture(void *degaspicture_addr, void *dest)
 {
-    DEGAS_header * header = (DEGAS_header *)degaspicture_addr;
-    ESWK_SetPalette(&(header->palette[0]));
-    ESWK_CopyScreen((void *)&(header->first_screen_data_word), dest);
+    PictureInformation current;
+    ESWK_CalcPI1PictureDataAddr(degaspicture_addr, &current);
+    ESWK_SetPalette(current.palette);
+    ESWK_CopyScreen(current.data, dest);
 
     return;
 }

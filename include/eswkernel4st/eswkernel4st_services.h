@@ -161,6 +161,15 @@
     #define IKBD_KEY_CLRHOME     0x47U  /**< ... */
     #define IKBD_KEY_CAPSLOCK    0x3AU  /**< ... */
 
+    /**
+     * @brief data structure to hold picture information
+     */
+    typedef struct
+    {
+        void * palette;   /**< pointer to the picture's palette */
+        void * data;      /**< pointer to the picture's screen data */
+    } PictureInformation;
+
 
     /**
      * @brief callback for the user application to request termination of the main loop
@@ -219,19 +228,17 @@
      * @brief   calculates addresses for screen and palette information for NEOCHROME picture in RAM
      * @details Use this to access the data parts of the picture independently.
      * @param   neopicture_addr points to NEOCHROME picture in RAM
-     * @param   dest_screen_data is updated with a RAM address relative to neopicture_addr pointing to screen pixel data
-     * @param   dest_palette_data is updated with a RAM address relative to neopicture_addr pointing to palette information
+     * @param   picinfo is updated with information about the picture's screen and palette data
      */
-    void ESWK_CalcNEOPictureDataAddr(void *neopicture_addr, void *dest_screen_data, void *dest_palette_data);
+    void ESWK_CalcNEOPictureDataAddr(void *neopicture_addr, PictureInformation * picinfo);
 
     /**
      * @brief   calculates addresses for screen and palette information for DEGAS picture in RAM
      * @details Use this to access the data parts of the picture independently.
      * @param   degaspicture_addr points to DEGAS picture in RAM
-     * @param   dest_screen_data is updated with a RAM address relative to neopicture_addr pointing to screen pixel data
-     * @param   dest_palette_data is updated with a RAM address relative to neopicture_addr pointing to palette information
+     * @param   picinfo is updated with information about the picture's screen and palette data
      */
-    void ESWK_CalcPI1PictureDataAddr(void *degaspicture_addr, void *dest_screen_data, void *dest_palette_data);
+    void ESWK_CalcPI1PictureDataAddr(void *degaspicture_addr, PictureInformation * picinfo);
 
     /**
      * @brief display NEOCHROME picture with setting the associated palette
