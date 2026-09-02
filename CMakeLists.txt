@@ -38,6 +38,6 @@ include_directories(${ESWKERNEL4ST_INCLUDE})
 add_subdirectory(src)
 
 if(ESWKERNEL4ST_ENABLE_TEST)
-    message(STATUS "ESWKernel4ST_ENABLE_TEST is ON, adding test executables")
+    message(STATUS "ESWKERNEL4ST_ENABLE_TEST is ON, adding test executables")
     add_subdirectory(test)
 endif()
